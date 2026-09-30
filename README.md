@@ -1,4 +1,5 @@
 <!--no-pdf-->
+
 # CMSC 124 Problem Set 1 Starter
 
 This incomplete C17 project is the starter for the ten data types from Unit 5.
@@ -9,8 +10,8 @@ toolchains, and local verification details for the work that the manual defines.
 
 Replace the two entries below. An assigned trio adds one entry.
 
-- Full Name (`@github-username`)
-- Full Name (`@github-username`)
+- Drew T. Cudiamat (`@pojomo2`)
+- Samantha F. Mok (`@smnthmk`)
 
 ## Files You May Change
 
@@ -55,11 +56,11 @@ evidence.
 
 The laboratory interpreter uses the same exit-code contract.
 
-| Code | Meaning |
-|---|---|
-| 0 | Every command ran. The program released each reference. |
-| 65 | The driver rejected the case file before execution. |
-| 70 | A command ran and reported an error. |
+| Code | Meaning                                                 |
+| ---- | ------------------------------------------------------- |
+| 0    | Every command ran. The program released each reference. |
+| 65   | The driver rejected the case file before execution.     |
+| 70   | A command ran and reported an error.                    |
 
 ## First Run
 
@@ -80,12 +81,12 @@ is correct for the starter. Your fork passes after you implement all modules.
 
 Each row records an executed test.
 
-| Environment | Versions | Result |
-|---|---|---|
-| MSYS2 UCRT64 on Windows 11 | GCC 16.2.0, CMake 4.4.2, Ninja 1.13.2, Python 3.14.7 | The starter passed 33 of 63 checks. The reference passed 63 of 63 checks. Sanitizers were unavailable. |
-| Ubuntu 24.04 under WSL 2 | GCC 13.3.0, CMake 4.4.3, Ninja 1.13.2, Python 3.12.3 | The reference passed 63 of 63 checks twice. The sanitizer run and both private helpers passed. |
-| GitHub Actions on `ubuntu-latest` | `.github/workflows/test.yml` | The current 63-case starter reached `check.sh` and produced the expected failure. |
-| GitHub Actions on `macos-latest` | `.github/workflows/test.yml` with Apple Clang | The current 63-case starter reached `check.sh` and produced the expected failure. |
+| Environment                       | Versions                                             | Result                                                                                                 |
+| --------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| MSYS2 UCRT64 on Windows 11        | GCC 16.2.0, CMake 4.4.2, Ninja 1.13.2, Python 3.14.7 | The starter passed 33 of 63 checks. The reference passed 63 of 63 checks. Sanitizers were unavailable. |
+| Ubuntu 24.04 under WSL 2          | GCC 13.3.0, CMake 4.4.3, Ninja 1.13.2, Python 3.12.3 | The reference passed 63 of 63 checks twice. The sanitizer run and both private helpers passed.         |
+| GitHub Actions on `ubuntu-latest` | `.github/workflows/test.yml`                         | The current 63-case starter reached `check.sh` and produced the expected failure.                      |
+| GitHub Actions on `macos-latest`  | `.github/workflows/test.yml` with Apple Clang        | The current 63-case starter reached `check.sh` and produced the expected failure.                      |
 
 The Ubuntu WSL test used the same `verify.sh` entry point. CMake built the
 MSYS2 test. An instructor reference supplied the complete implementation.
