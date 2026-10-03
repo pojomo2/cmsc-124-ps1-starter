@@ -33,7 +33,7 @@ struct dt_list {
  */
 dt_list *dt_list_nil(void)
 {
-    /* TODO: Return the empty list. Do not allocate memory.
+    /* Return the empty list. Do not allocate memory.
        dt_list_nil()             -> the empty list, which prints as ()
        dt_list_len(dt_list_nil()) -> 0
        cases/normal/list_basics.case */
@@ -47,16 +47,26 @@ dt_list *dt_list_nil(void)
  */
 dt_list *dt_list_cons(dt_value head, dt_list *tail)
 {
-    /* TODO: Allocate one cell that references the specified tail.
+    /* Allocate one cell that references the specified tail.
        Preserve the tail.
        Create e, c, b, and a in that order.
        List a contains (1 2 3).
        List b contains (2 3) and references the same cells for 2 and 3.
        an allocation failure -> NULL
        cases/normal/list_basics.case, cases/cleanup/shared_list_tail.case */
-    (void)head;
-    (void)tail;
-    return NULL;
+    
+    //allocate one cell
+    dt_list *cell = malloc(sizeof *cell);
+
+    if (cell == NULL) {
+        return NULL;
+    }
+
+    // build cell
+    (*cell).head = head;
+    (*cell).tail = tail;
+    return cell;
+
 }
 
 /*
@@ -65,11 +75,12 @@ dt_list *dt_list_cons(dt_value head, dt_list *tail)
  */
 void dt_list_free(dt_list *l)
 {
-    /* TODO: Release this cell. Preserve its tail. Accept NULL.
+    /* Release this cell. Preserve its tail. Accept NULL.
        freeing a's first cell  -> b still reaches the cells holding 2 and 3
        releasing the tail here causes the sanitizer to report a double release
        cases/cleanup/shared_list_tail.case */
-    (void)l;
+    
+    free(l);
 }
 
 /*
@@ -81,8 +92,15 @@ size_t dt_list_len(const dt_list *l)
        for a = (1 2 3):  dt_list_len(a) -> 3
        for the empty list: dt_list_len(NULL) -> 0
        cases/normal/list_basics.case */
-    (void)l;
-    return 0;
+
+    size_t cell_count = 0;
+
+    //while list isn't pointing to null, count
+    while (l != NULL) {
+        cell_count++;
+        l = (*l).tail;
+    }
+    return cell_count;
 }
 
 /*
@@ -92,14 +110,18 @@ size_t dt_list_len(const dt_list *l)
  */
 dt_status dt_list_car(const dt_list *l, dt_value *out)
 {
-    /* TODO: Return DT_ERR_EMPTY for an empty list.
+    /* Return DT_ERR_EMPTY for an empty list.
        Preserve *out after this error. A nil value is a valid cell value.
        for a = (1 2 3):     dt_list_car(a, &out)    -> DT_OK, *out is 1
        for the empty list:  dt_list_car(NULL, &out) -> DT_ERR_EMPTY, *out untouched
        cases/normal/list_basics.case, cases/boundary/list_car_empty.case */
-    (void)l;
-    (void)out;
-    return DT_ERR_EMPTY;
+    
+    if (l == NULL) {
+        return DT_ERR_EMPTY;
+    }
+
+    *out = (*l).head;
+    return DT_OK;
 }
 
 /*
@@ -108,12 +130,16 @@ dt_status dt_list_car(const dt_list *l, dt_value *out)
  */
 dt_status dt_list_cdr(const dt_list *l, dt_list **out)
 {
-    /* TODO: Return DT_ERR_EMPTY for an empty list. Return the existing tail for
+    /* Return DT_ERR_EMPTY for an empty list. Return the existing tail for
        a nonempty list. A one-element list has an empty tail.
        for a = (1 2 3):     dt_list_cdr(a, &out)    -> DT_OK, *out references tail b
        for the empty list:  dt_list_cdr(NULL, &out) -> DT_ERR_EMPTY, *out untouched
        cases/normal/list_basics.case, cases/boundary/list_cdr_empty.case */
-    (void)l;
-    (void)out;
-    return DT_ERR_EMPTY;
+    
+    if (l == NULL) {
+        return DT_ERR_EMPTY;
+    }
+
+    *out = (*l).tail;
+    return DT_OK;
 }
